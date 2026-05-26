@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViews() {
         findViewById<MaterialButton>(R.id.nextBtn).setOnClickListener { showNextCar() }
+        findViewById<MaterialButton>(R.id.rentBtn).setOnClickListener { openRentalScreen() }
         findViewById<ImageButton>(R.id.favBtn).setOnClickListener { toggleFavourite() }
         findViewById<ImageButton>(R.id.darkModeToggle).setOnClickListener { toggleDarkMode() }
 
@@ -135,8 +136,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.favBtn).isSelected = CarRepository.isFavourite(car.id)
     }
 
-    // Wired in Task 4 — RentalDetailsActivity
     private fun openRentalScreen() {
+        if (displayedCars.isEmpty()) return
+        val car = displayedCars[currentCarIndex]
+        val intent = Intent(this, RentalDetailsActivity::class.java).apply {
+            putExtra(EXTRA_CAR_DATA, car)
+        }
+        rentResultLauncher.launch(intent)
     }
 
     private fun toggleFavourite() {
