@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.CarRentalApp.CarTitle" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.CarRentalApp.CarSubtitle" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="Widget.CarRentalApp.SpecLabel" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+</resources>

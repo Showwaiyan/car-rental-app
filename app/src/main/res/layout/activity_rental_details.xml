@@ -29,19 +29,18 @@
 
             <TextView
                 android:id="@+id/rentalCarName"
+                style="@style/Widget.CarRentalApp.CarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Car Name"
-                android:textAppearance="?attr/textAppearanceHeadlineMedium" />
+                android:text="Car Name" />
 
             <TextView
                 android:id="@+id/rentalCarSubtitle"
+                style="@style/Widget.CarRentalApp.CarSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Model \u2022 Year"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurfaceVariant" />
+                android:text="Model \u2022 Year" />
 
             <TextView
                 android:id="@+id/rentalDailyCost"
@@ -52,11 +51,11 @@
                 android:textAppearance="?attr/textAppearanceTitleLarge" />
 
             <TextView
+                style="@style/Widget.CarRentalApp.SpecLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Rental Days"
-                android:textAppearance="?attr/textAppearanceLabelLarge" />
+                android:text="Rental Days" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/daySlider"

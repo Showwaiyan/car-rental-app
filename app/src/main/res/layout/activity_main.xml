@@ -196,27 +196,24 @@
 
                     <TextView
                         android:id="@+id/carModelLabel"
+                        style="@style/Widget.CarRentalApp.SpecLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MODEL"
-                        android:textAppearance="?attr/textAppearanceLabelSmall"
-                        android:textColor="?attr/colorPrimary"
-                        android:textStyle="bold" />
+                        android:text="MODEL" />
 
                     <TextView
                         android:id="@+id/carName"
+                        style="@style/Widget.CarRentalApp.CarTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Car Name"
-                        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
+                        android:text="Car Name" />
 
                     <TextView
                         android:id="@+id/carSubtitle"
+                        style="@style/Widget.CarRentalApp.CarSubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Model \u2022 Year"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
+                        android:text="Model \u2022 Year" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
