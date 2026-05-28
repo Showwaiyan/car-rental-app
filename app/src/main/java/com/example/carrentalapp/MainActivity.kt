@@ -1,6 +1,7 @@
 package com.example.carrentalapp
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
@@ -71,18 +72,15 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.darkModeToggle).setOnClickListener { toggleDarkMode() }
         updateDarkModeIcon()
 
-        findViewById<MaterialButton>(R.id.sortRatingBtn).setOnClickListener {
-            sortByRating()
-            highlightSortButton(it as MaterialButton)
-        }
-        findViewById<MaterialButton>(R.id.sortYearBtn).setOnClickListener {
-            sortByYear()
-            highlightSortButton(it as MaterialButton)
-        }
-        findViewById<MaterialButton>(R.id.sortCostBtn).setOnClickListener {
-            sortByCost()
-            highlightSortButton(it as MaterialButton)
-        }
+        findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(R.id.sortToggleGroup)
+            .addOnButtonCheckedListener { _, checkedId, isChecked ->
+                if (!isChecked) return@addOnButtonCheckedListener
+                when (checkedId) {
+                    R.id.sortRatingBtn -> sortByRating()
+                    R.id.sortYearBtn -> sortByYear()
+                    R.id.sortCostBtn -> sortByCost()
+                }
+            }
 
         val searchInput = findViewById<EditText>(R.id.searchInput)
         searchInput.addTextChangedListener(object : TextWatcher {
@@ -185,10 +183,8 @@ class MainActivity : AppCompatActivity() {
         val color = com.google.android.material.color.MaterialColors.getColor(
             toggle, com.google.android.material.R.attr.colorOnSurfaceVariant
         )
-        toggle.imageTintList = android.content.res.ColorStateList.valueOf(color)
+        toggle.imageTintList = ColorStateList.valueOf(color)
     }
-
-    private var currentSortChip: MaterialButton? = null
 
     private fun sortByRating() {
         displayedCars = displayedCars.sortedByDescending { it.rating }
@@ -222,12 +218,6 @@ class MainActivity : AppCompatActivity() {
         else {
             findViewById<TextView>(R.id.carName).text = "No cars found"
         }
-    }
-
-    private fun highlightSortButton(selected: MaterialButton) {
-        currentSortChip?.isSelected = false
-        selected.isSelected = true
-        currentSortChip = selected
     }
 
     companion object {
