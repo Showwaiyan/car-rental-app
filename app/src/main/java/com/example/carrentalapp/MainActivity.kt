@@ -1,12 +1,13 @@
 package com.example.carrentalapp
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,7 +22,6 @@ import com.example.carrentalapp.model.Car
 import com.example.carrentalapp.ui.FavouriteAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
 
@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialButton>(R.id.rentBtn).setOnClickListener { openRentalScreen() }
         findViewById<ImageButton>(R.id.favBtn).setOnClickListener { toggleFavourite() }
         findViewById<ImageButton>(R.id.darkModeToggle).setOnClickListener { toggleDarkMode() }
+        updateDarkModeIcon()
 
         findViewById<MaterialButton>(R.id.sortRatingBtn).setOnClickListener {
             sortByRating()
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             highlightSortButton(it as MaterialButton)
         }
 
-        val searchInput = findViewById<TextInputEditText>(R.id.searchInput)
+        val searchInput = findViewById<EditText>(R.id.searchInput)
         searchInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -129,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.carPrice).text = "$${car.dailyCost} / day"
         findViewById<TextView>(R.id.kilometresText).text = "${car.kilometres} km"
         findViewById<TextView>(R.id.ratingText).text = car.rating.toString()
-        findViewById<RatingBar>(R.id.ratingBar).rating = car.rating
+        findViewById<TextView>(R.id.typeText).text = car.model.substringBefore(" ").uppercase()
         findViewById<ImageView>(R.id.carImage).setImageResource(car.imageResId)
         findViewById<MaterialButton>(R.id.rentBtn).isEnabled = true
         findViewById<MaterialButton>(R.id.nextBtn).isEnabled = true
@@ -161,13 +162,24 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.balanceText).text = "${CarRepository.creditBalance} Credits"
     }
 
+    private fun isNightMode(): Boolean {
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return mode == Configuration.UI_MODE_NIGHT_YES
+    }
+
     private fun toggleDarkMode() {
-        val currentMode = AppCompatDelegate.getDefaultNightMode()
-        if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
+        AppCompatDelegate.setDefaultNightMode(
+            if (isNightMode()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+        )
+    }
+
+    private fun updateDarkModeIcon() {
+        val toggle = findViewById<ImageButton>(R.id.darkModeToggle)
+        toggle.setImageResource(if (isNightMode()) R.drawable.ic_light_mode else R.drawable.ic_dark_mode)
+        val color = com.google.android.material.color.MaterialColors.getColor(
+            toggle, com.google.android.material.R.attr.colorOnSurfaceVariant
+        )
+        toggle.imageTintList = android.content.res.ColorStateList.valueOf(color)
     }
 
     private var currentSortChip: MaterialButton? = null

@@ -1,4 +1,30 @@
 <resources>
     <style name="Base.Theme.CarRentalApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">#003a15</item>
+        <item name="colorOnPrimaryContainer">#71fe91</item>
+
+        <item name="colorSecondary">#c4c6ca</item>
+        <item name="colorOnSecondary">#2b2c2f</item>
+        <item name="colorSecondaryContainer">#414246</item>
+        <item name="colorOnSecondaryContainer">#dfdfe3</item>
+
+        <item name="colorTertiary">#99bbff</item>
+        <item name="colorOnTertiary">#001f4a</item>
+        <item name="colorTertiaryContainer">#003d99</item>
+        <item name="colorOnTertiaryContainer">#dae2ff</item>
+
+        <item name="colorError">#ff5449</item>
+        <item name="colorOnError">#001f1f</item>
+        <item name="colorErrorContainer">#93000a</item>
+        <item name="colorOnErrorContainer">#ffdad6</item>
+
+        <item name="colorSurface">#1a1c1e</item>
+        <item name="colorOnSurface">#e2e2e6</item>
+        <item name="colorOnSurfaceVariant">#c4c6ca</item>
+
+        <item name="colorOutline">#8d938d</item>
+        <item name="colorOutlineVariant">#3d4a3d</item>
     </style>
 </resources>
