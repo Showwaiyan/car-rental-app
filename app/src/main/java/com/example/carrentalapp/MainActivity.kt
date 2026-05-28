@@ -134,7 +134,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.carImage).setImageResource(car.imageResId)
         findViewById<MaterialButton>(R.id.rentBtn).isEnabled = true
         findViewById<MaterialButton>(R.id.nextBtn).isEnabled = true
-        findViewById<ImageButton>(R.id.favBtn).isSelected = CarRepository.isFavourite(car.id)
+        updateFavIcon(CarRepository.isFavourite(car.id))
+    }
+
+    private fun updateFavIcon(isFav: Boolean) {
+        findViewById<ImageButton>(R.id.favBtn).setImageResource(
+            if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+        )
     }
 
     private fun openRentalScreen() {
@@ -150,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         if (displayedCars.isEmpty()) return
         val car = displayedCars[currentCarIndex]
         CarRepository.toggleFavourite(car.id)
-        findViewById<ImageButton>(R.id.favBtn).isSelected = CarRepository.isFavourite(car.id)
+        updateFavIcon(CarRepository.isFavourite(car.id))
         updateFavourites()
     }
 
