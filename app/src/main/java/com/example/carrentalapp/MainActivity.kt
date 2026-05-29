@@ -1,7 +1,6 @@
 package com.example.carrentalapp
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
@@ -23,12 +22,14 @@ import com.example.carrentalapp.model.Car
 import com.example.carrentalapp.ui.FavouriteAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class MainActivity : AppCompatActivity() {
 
     private var currentCarIndex = 0
     private var displayedCars: List<Car> = CarRepository.availableCars
     private lateinit var favouriteAdapter: FavouriteAdapter
+
 
     private val rentResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -69,7 +70,11 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialButton>(R.id.nextBtn).setOnClickListener { showNextCar() }
         findViewById<MaterialButton>(R.id.rentBtn).setOnClickListener { openRentalScreen() }
         findViewById<ImageButton>(R.id.favBtn).setOnClickListener { toggleFavourite() }
-        findViewById<ImageButton>(R.id.darkModeToggle).setOnClickListener { toggleDarkMode() }
+        findViewById<SwitchMaterial>(R.id.darkModeToggle).setOnCheckedChangeListener { _, isChecked ->
+            delegate.setLocalNightMode(
+                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
+        }
         updateDarkModeIcon()
 
         findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(R.id.sortToggleGroup)
@@ -171,19 +176,18 @@ class MainActivity : AppCompatActivity() {
         return mode == Configuration.UI_MODE_NIGHT_YES
     }
 
-    private fun toggleDarkMode() {
-        AppCompatDelegate.setDefaultNightMode(
-            if (isNightMode()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
-        )
-    }
-
     private fun updateDarkModeIcon() {
-        val toggle = findViewById<ImageButton>(R.id.darkModeToggle)
-        toggle.setImageResource(if (isNightMode()) R.drawable.ic_light_mode else R.drawable.ic_dark_mode)
-        val color = com.google.android.material.color.MaterialColors.getColor(
-            toggle, com.google.android.material.R.attr.colorOnSurfaceVariant
+        val toggle = findViewById<SwitchMaterial>(R.id.darkModeToggle)
+        toggle.setOnCheckedChangeListener(null)
+        toggle.isChecked = isNightMode()
+        toggle.setOnCheckedChangeListener { _, isChecked ->
+            delegate.setLocalNightMode(
+                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
+        }
+        findViewById<ImageView>(R.id.darkModeIcon).setImageResource(
+            if (isNightMode()) R.drawable.ic_dark_mode else R.drawable.ic_light_mode
         )
-        toggle.imageTintList = ColorStateList.valueOf(color)
     }
 
     private fun sortByRating() {

@@ -1,7 +1,6 @@
 package com.example.carrentalapp
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Paint
 import android.os.Bundle
@@ -16,6 +15,7 @@ import com.example.carrentalapp.model.Car
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class RentalDetailsActivity : AppCompatActivity() {
 
@@ -89,7 +89,6 @@ class RentalDetailsActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<ImageButton>(R.id.darkModeToggle).setOnClickListener { toggleDarkMode() }
         updateDarkModeIcon()
 
         updateTotalCost()
@@ -100,19 +99,18 @@ class RentalDetailsActivity : AppCompatActivity() {
         return mode == Configuration.UI_MODE_NIGHT_YES
     }
 
-    private fun toggleDarkMode() {
-        AppCompatDelegate.setDefaultNightMode(
-            if (isNightMode()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
-        )
-    }
-
     private fun updateDarkModeIcon() {
-        val toggle = findViewById<ImageButton>(R.id.darkModeToggle)
-        toggle.setImageResource(if (isNightMode()) R.drawable.ic_light_mode else R.drawable.ic_dark_mode)
-        val color = com.google.android.material.color.MaterialColors.getColor(
-            toggle, com.google.android.material.R.attr.colorOnSurfaceVariant
+        val toggle = findViewById<SwitchMaterial>(R.id.darkModeToggle)
+        toggle.setOnCheckedChangeListener(null)
+        toggle.isChecked = isNightMode()
+        toggle.setOnCheckedChangeListener { _, isChecked ->
+            delegate.setLocalNightMode(
+                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
+        }
+        findViewById<ImageView>(R.id.darkModeIcon).setImageResource(
+            if (isNightMode()) R.drawable.ic_dark_mode else R.drawable.ic_light_mode
         )
-        toggle.imageTintList = ColorStateList.valueOf(color)
     }
 
     private fun updateTotalCost() {

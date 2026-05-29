@@ -56,11 +56,19 @@
                     android:textColor="?attr/colorOnSurface" />
 
                 <!-- Dark Mode Toggle -->
-                <ImageButton
+                <ImageView
+                    android:id="@+id/darkModeIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_dark_mode"
+                    android:tint="?attr/colorOnSurfaceVariant"
+                    android:importantForAccessibility="no" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/darkModeToggle"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="?selectableItemBackgroundBorderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:contentDescription="Toggle dark mode" />
 
             </LinearLayout>
