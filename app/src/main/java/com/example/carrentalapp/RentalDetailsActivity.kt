@@ -1,11 +1,16 @@
 package com.example.carrentalapp
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.content.res.Configuration
+import android.graphics.Paint
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.carrentalapp.data.CarRepository
 import com.example.carrentalapp.model.Car
 import com.google.android.material.button.MaterialButton
@@ -31,19 +36,24 @@ class RentalDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        findViewById<ImageView>(R.id.rentalCarImage).setImageResource(car.imageResId)
         findViewById<TextView>(R.id.rentalCarName).text = car.name
         findViewById<TextView>(R.id.rentalCarSubtitle).text = "${car.model} \u2022 ${car.year}"
-        findViewById<TextView>(R.id.rentalDailyCost).text = "$${car.dailyCost} / day"
+        findViewById<TextView>(R.id.rentalDailyCost).text = "$${car.dailyCost}/day"
+        findViewById<TextView>(R.id.rentalRatingText).text = car.rating.toString()
+        findViewById<ImageView>(R.id.rentalCarImage).setImageResource(car.imageResId)
+        findViewById<TextView>(R.id.dailyRentalAmount).text = "$${car.dailyCost}.00"
+        findViewById<TextView>(R.id.pickupDateText).text = "Today"
 
         val slider = findViewById<Slider>(R.id.daySlider)
         slider.addOnChangeListener { _, value, _ ->
             selectedDays = value.toInt()
-            findViewById<TextView>(R.id.selectedDaysText).text = "$selectedDays day${if (selectedDays > 1) "s" else ""}"
+            val label = "$selectedDays day${if (selectedDays > 1) "s" else ""}"
+            findViewById<TextView>(R.id.selectedDaysText).text = label
+            findViewById<TextView>(R.id.dailyRentalLabel).text = "Daily rental ($label)"
             updateTotalCost()
         }
 
-        findViewById<MaterialButton>(R.id.backBtn).setOnClickListener {
+        findViewById<ImageButton>(R.id.backBtn).setOnClickListener {
             val intent = Intent().apply {
                 putExtra(MainActivity.EXTRA_CAR_ID, car.id)
                 putExtra(MainActivity.EXTRA_RENTAL_DAYS, selectedDays)
@@ -72,12 +82,44 @@ class RentalDetailsActivity : AppCompatActivity() {
             finish()
         }
 
+        findViewById<TextView>(R.id.termsLink).apply {
+            paint.flags = paint.flags or Paint.UNDERLINE_TEXT_FLAG
+            setOnClickListener {
+                Snackbar.make(findViewById(android.R.id.content), "Terms & Conditions available on our website.", Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        findViewById<ImageButton>(R.id.darkModeToggle).setOnClickListener { toggleDarkMode() }
+        updateDarkModeIcon()
+
         updateTotalCost()
+    }
+
+    private fun isNightMode(): Boolean {
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return mode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    private fun toggleDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isNightMode()) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+        )
+    }
+
+    private fun updateDarkModeIcon() {
+        val toggle = findViewById<ImageButton>(R.id.darkModeToggle)
+        toggle.setImageResource(if (isNightMode()) R.drawable.ic_light_mode else R.drawable.ic_dark_mode)
+        val color = com.google.android.material.color.MaterialColors.getColor(
+            toggle, com.google.android.material.R.attr.colorOnSurfaceVariant
+        )
+        toggle.imageTintList = ColorStateList.valueOf(color)
     }
 
     private fun updateTotalCost() {
         val totalCost = car.dailyCost * selectedDays
-        findViewById<TextView>(R.id.totalCostText).text = "$$totalCost"
+        val costText = "$$totalCost"
+        findViewById<TextView>(R.id.totalCostText).text = costText
+        findViewById<TextView>(R.id.btnTotalPrice).text = costText
         findViewById<TextView>(R.id.errorText).visibility = android.view.View.GONE
     }
 

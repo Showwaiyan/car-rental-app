@@ -1,133 +1,652 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".RentalDetailsActivity">
 
-    <com.google.android.material.card.MaterialCardView
+    <!-- ═══════════════════════════════════════
+         TOP APP BAR
+    ═══════════════════════════════════════ -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="2dp">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:elevation="0dp">
 
-        <LinearLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <ImageView
-                android:id="@+id/rentalCarImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_foreground" />
-
-            <TextView
-                android:id="@+id/rentalCarName"
-                style="@style/Widget.CarRentalApp.CarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Car Name" />
-
-            <TextView
-                android:id="@+id/rentalCarSubtitle"
-                style="@style/Widget.CarRentalApp.CarSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Model \u2022 Year" />
-
-            <TextView
-                android:id="@+id/rentalDailyCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="$0 / day"
-                android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-            <TextView
-                style="@style/Widget.CarRentalApp.SpecLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Rental Days" />
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/daySlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:valueFrom="1"
-                android:valueTo="7"
-                android:value="1"
-                android:stepSize="1" />
-
-            <TextView
-                android:id="@+id/selectedDaysText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 day"
-                android:textAppearance="?attr/textAppearanceBodyMedium" />
+            android:layout_height="64dp"
+            android:background="?attr/colorSurface"
+            android:paddingHorizontal="4dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total Cost: "
-                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+                <!-- Back Arrow -->
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_back"
+                    android:tint="?attr/colorPrimary"
+                    android:contentDescription="Go back" />
 
+                <!-- Title -->
                 <TextView
-                    android:id="@+id/totalCostText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="$0"
-                    android:textAppearance="?attr/textAppearanceHeadlineLarge"
-                    android:textColor="?attr/colorPrimary" />
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="Confirm Booking"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <!-- Dark Mode Toggle -->
+                <ImageButton
+                    android:id="@+id/darkModeToggle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="Toggle dark mode" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/errorText"
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ═══════════════════════════════════════
+         SCROLLABLE BODY
+    ═══════════════════════════════════════ -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="96dp"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp">
+
+            <!-- ───────────────────────────────
+                 CARD 1 — VEHICLE
+            ─────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/vehicleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorError"
-                android:visibility="gone"
-                android:textAppearance="?attr/textAppearanceBodyMedium" />
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardElevation="2dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Image + price badge overlay -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp">
+
+                        <ImageView
+                            android:id="@+id/rentalCarImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_launcher_foreground" />
+
+                        <!-- $45/day badge — top right -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="10dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardBackgroundColor="#F0FFFFFF"
+                            app:cardElevation="4dp"
+                            app:strokeColor="?attr/colorOutlineVariant"
+                            app:strokeWidth="1dp">
+
+                            <TextView
+                                android:id="@+id/rentalDailyCost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="5dp"
+                                android:text="$45/day"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorPrimary" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </FrameLayout>
+
+                    <!-- Name + subtitle + rating -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/rentalCarName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Car Name"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnSurface" />
+
+                            <TextView
+                                android:id="@+id/rentalCarSubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Model • Year"
+                                android:textSize="12sp"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        </LinearLayout>
+
+                        <!-- Rating pill -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="100dp"
+                            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="★"
+                                    android:textSize="13sp"
+                                    android:textColor="?attr/colorPrimary" />
+
+                                <TextView
+                                    android:id="@+id/rentalRatingText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:text="4.8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="?attr/colorPrimary" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ───────────────────────────────
+                 CARD 2 — RENTAL PERIOD
+            ─────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/rentalPeriodCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardElevation="2dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- "Rental Period" label + days pill -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Rental Period"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <!-- Green pill badge -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="100dp"
+                            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                            app:cardElevation="0dp">
+
+                            <TextView
+                                android:id="@+id/selectedDaysText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="18dp"
+                                android:paddingVertical="8dp"
+                                android:text="1 Day"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnPrimary" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <!-- Slider -->
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/daySlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="-4dp"
+                        android:valueFrom="1"
+                        android:valueTo="7"
+                        android:value="1"
+                        android:stepSize="1"
+                        app:thumbColor="?attr/colorPrimaryContainer"
+                        app:thumbRadius="10dp"
+                        app:trackColorActive="?attr/colorPrimaryContainer"
+                        app:trackColorInactive="?attr/colorSurfaceContainerHighest"
+                        app:haloColor="?attr/colorPrimaryContainer"
+                        app:trackHeight="6dp" />
+
+                    <!-- Slider end labels -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="1 Day"
+                            android:textSize="10sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7 Days"
+                            android:textSize="10sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="?attr/colorOutlineVariant" />
+
+                    <!-- Pickup & Return  |  Insurance -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Left: Pickup & Return -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="PICKUP &amp; RETURN"
+                                android:textSize="9sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnSurfaceVariant"
+                                android:letterSpacing="0.08" />
+
+                            <TextView
+                                android:id="@+id/pickupDateText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Thu, Oct 24 • 10 AM"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnSurface" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Downtown Hub"
+                                android:textSize="11sp"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        </LinearLayout>
+
+                        <!-- Right: Insurance -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="INSURANCE"
+                                android:textSize="9sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnSurfaceVariant"
+                                android:letterSpacing="0.08" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Standard Plan"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnSurface" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Free Cancel"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorPrimary" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ───────────────────────────────
+                 CARD 3 — SUMMARY
+            ─────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/summaryCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardElevation="2dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Summary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Row: Daily rental -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/dailyRentalLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Daily rental (1 Day)"
+                            android:textSize="13sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/dailyRentalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$45.00"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+
+                    </LinearLayout>
+
+                    <!-- Row: Service fee -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Service fee"
+                            android:textSize="13sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$8.50"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+
+                    </LinearLayout>
+
+                    <!-- Row: Insurance -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Insurance"
+                            android:textSize="13sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Included"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <!-- Dashed divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/divider_dashed" />
+
+                    <!-- Row: Total Price -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Price"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <TextView
+                            android:id="@+id/totalCostText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$53.50"
+                            android:textSize="26sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <!-- Error banner (hidden by default) -->
+                    <TextView
+                        android:id="@+id/errorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:background="@drawable/bg_error_banner"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorError"
+                        android:visibility="gone"
+                        tools:text="Insufficient credits. You have 500 credits."
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Terms link -->
+            <TextView
+                android:id="@+id/termsLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="View Rental Terms &amp; Conditions"
+                android:textAlignment="center"
+                android:textSize="11sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:background="?selectableItemBackgroundBorderless" />
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
+    <!-- ═══════════════════════════════════════
+         BOTTOM ACTION BAR  (sticky footer)
+    ═══════════════════════════════════════ -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="end">
+        android:layout_gravity="bottom"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardElevation="16dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/backBtn"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="wrap_content"
+        <!-- Wrapper so the button + price sit side by side inside the CTA -->
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Back" />
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="28dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveBtn"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save" />
+            <!-- Full-width confirm button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Confirm Booking"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+                android:gravity="center_vertical|start"
+                android:paddingStart="20dp"
+                app:backgroundTint="?attr/colorPrimaryContainer"
+                app:cornerRadius="14dp"
+                app:icon="@drawable/ic_lock"
+                app:iconTint="?attr/colorOnPrimary"
+                app:iconGravity="textStart"
+                app:iconSize="18dp"
+                app:iconPadding="8dp" />
 
-    </LinearLayout>
+            <!-- Total price pinned to the right inside the button -->
+            <TextView
+                android:id="@+id/btnTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                android:paddingEnd="20dp"
+                android:text="$53.50"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+                android:importantForAccessibility="no" />
 
-</LinearLayout>
+        </FrameLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

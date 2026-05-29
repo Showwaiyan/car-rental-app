@@ -44,7 +44,12 @@
     <color name="outline">#6d7b6c</color>
     <color name="outline_variant">#bccbb9</color>
 
+    <!-- Surface container levels (Material3) -->
+    <color name="surface_container_high">#e3e5e7</color>
+    <color name="surface_container_highest">#dadcde</color>
+
     <!-- Misc -->
+    <color name="primary_light">#e8f5e9</color>
     <color name="star_yellow">#f59e0b</color>
     <color name="heart_red">#ef4444</color>
 </resources>

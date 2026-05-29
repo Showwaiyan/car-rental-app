@@ -205,13 +205,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchCars(query: String) {
-        displayedCars = if (query.isBlank()) {
-            CarRepository.availableCars
-        } else {
-            CarRepository.availableCars.filter {
-                it.name.contains(query, ignoreCase = true) ||
-                    it.model.contains(query, ignoreCase = true)
-            }
+        val source = if (query.isBlank()) CarRepository.availableCars
+        else CarRepository.availableCars.filter {
+            it.name.contains(query, ignoreCase = true) ||
+                it.model.contains(query, ignoreCase = true)
+        }
+        displayedCars = source.toMutableList()
+        val checkedId = findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(R.id.sortToggleGroup).checkedButtonId
+        when (checkedId) {
+            R.id.sortRatingBtn -> displayedCars = displayedCars.sortedByDescending { it.rating }
+            R.id.sortYearBtn -> displayedCars = displayedCars.sortedByDescending { it.year }
+            R.id.sortCostBtn -> displayedCars = displayedCars.sortedBy { it.dailyCost }
         }
         currentCarIndex = 0
         if (displayedCars.isNotEmpty()) updateDisplayedCar()
