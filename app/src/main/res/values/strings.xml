@@ -1,3 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Car Rental App</string>
+
+    <!-- Main screen -->
+    <string name="no_cars_available">No cars available</string>
+    <string name="today">Today</string>
+    <string name="car_subtitle">%1$s • %2$s</string>
+    <string name="car_price">$%1$s / day</string>
+    <string name="car_kilometres">%1$s km</string>
+    <string name="balance_credits">%1$s Credits</string>
+    <string name="favourite_price">$%1$s / day</string>
+    <string name="search_hint">Search for a car…</string>
+
+    <!-- Snackbar messages -->
+    <string name="booking_confirmed">Booking confirmed!</string>
+    <string name="booking_cancelled">Booking cancelled.</string>
+    <string name="booking_exceeds_credit">Booking cannot exceed 400 credits</string>
+    <string name="insufficient_credits">Insufficient credits. You have %1$s credits.</string>
+    <string name="car_data_missing">Car data missing</string>
+    <string name="terms_message">Terms &amp; Conditions available on our website.</string>
+    <string name="added_to_favourites">Added to favourites</string>
+    <string name="removed_from_favourites">Removed from favourites</string>
+
+    <!-- Rental details -->
+    <string name="rental_daily_cost">$%1$s/day</string>
+    <string name="rental_daily_amount">$%1$s.00</string>
+    <string name="daily_rental_label">Daily rental (%1$s)</string>
+    <string name="total_cost">$%1$s</string>
+
+    <!-- Plurals -->
+    <plurals name="rental_days">
+        <item quantity="one">1 Day</item>
+        <item quantity="other">%d Days</item>
+    </plurals>
+    <plurals name="selected_days">
+        <item quantity="one">1 day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 </resources>

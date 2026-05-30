@@ -45,14 +45,14 @@ class MainActivity : AppCompatActivity() {
         if (carId > 0 && confirmed && days > 0) {
             val success = CarRepository.rentCar(carId, days)
             if (success) {
-                Snackbar.make(findViewById(android.R.id.content), "Booking confirmed!", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(findViewById(android.R.id.content), getString(R.string.booking_confirmed), Snackbar.LENGTH_LONG).show()
                 updateCurrentCar()
                 updateFavourites()
                 updateBalance()
                 updateRentals()
             }
         } else if (carId > 0 && !confirmed) {
-            Snackbar.make(findViewById(android.R.id.content), "Booking cancelled.", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.booking_cancelled), Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.carImage).setOnLongClickListener {
             toggleFavourite()
             val msg = if (CarRepository.isFavourite(displayedCars[currentCarIndex].id))
-                "Added to favourites" else "Removed from favourites"
+                getString(R.string.added_to_favourites) else getString(R.string.removed_from_favourites)
             Snackbar.make(it, msg, Snackbar.LENGTH_SHORT).show()
             true
         }
@@ -168,16 +168,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateDisplayedCar() {
         if (displayedCars.isEmpty()) {
-            findViewById<TextView>(R.id.carName).text = "No cars available"
+            findViewById<TextView>(R.id.carName).text = getString(R.string.no_cars_available)
             findViewById<MaterialButton>(R.id.rentBtn).isEnabled = false
             findViewById<MaterialButton>(R.id.nextBtn).isEnabled = false
             return
         }
         val car = displayedCars[currentCarIndex]
         findViewById<TextView>(R.id.carName).text = car.name
-        findViewById<TextView>(R.id.carSubtitle).text = "${car.model} \u2022 ${car.year}"
-        findViewById<TextView>(R.id.carPrice).text = "$${car.dailyCost} / day"
-        findViewById<TextView>(R.id.kilometresText).text = "${car.kilometres} km"
+        findViewById<TextView>(R.id.carSubtitle).text = getString(R.string.car_subtitle, car.model, car.year.toString())
+        findViewById<TextView>(R.id.carPrice).text = getString(R.string.car_price, car.dailyCost.toString())
+        findViewById<TextView>(R.id.kilometresText).text = getString(R.string.car_kilometres, car.kilometres.toString())
         findViewById<RatingBar>(R.id.ratingBar).apply {
             rating = car.rating
             (progressDrawable as? android.graphics.drawable.LayerDrawable)
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateBalance() {
-        findViewById<TextView>(R.id.balanceText).text = "${CarRepository.creditBalance} Credits"
+        findViewById<TextView>(R.id.balanceText).text = getString(R.string.balance_credits, CarRepository.creditBalance.toString())
     }
 
     private fun updateRentals() {

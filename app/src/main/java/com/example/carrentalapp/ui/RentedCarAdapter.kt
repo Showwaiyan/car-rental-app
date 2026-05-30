@@ -29,8 +29,7 @@ class RentedCarAdapter(
         val rental = rentals[position]
         holder.image.setImageResource(rental.car.imageResId)
         holder.name.text = rental.car.name
-        val daysLabel = if (rental.days == 1) "1 Day" else "${rental.days} Days"
-        holder.period.text = daysLabel
+        holder.period.text = holder.itemView.context.resources.getQuantityString(R.plurals.rental_days, rental.days, rental.days)
     }
 
     override fun getItemCount() = rentals.size

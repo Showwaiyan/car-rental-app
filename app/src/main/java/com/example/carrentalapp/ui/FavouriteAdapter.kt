@@ -30,7 +30,7 @@ class FavouriteAdapter(
         val car = cars[position]
         holder.image.setImageResource(car.imageResId)
         holder.name.text = car.name
-        holder.price.text = "$${car.dailyCost} / day"
+        holder.price.text = holder.itemView.context.getString(R.string.favourite_price, car.dailyCost.toString())
         holder.itemView.setOnClickListener { onCarClick(car) }
     }
 

@@ -30,7 +30,7 @@ class RentalDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_rental_details)
 
         car = intent.getParcelableExtra(MainActivity.EXTRA_CAR_DATA) ?: run {
-            Toast.makeText(this, "Car data missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.car_data_missing), Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -49,8 +49,8 @@ class RentalDetailsActivity : AppCompatActivity() {
 
     private fun setupViews() {
         findViewById<TextView>(R.id.rentalCarName).text = car.name
-        findViewById<TextView>(R.id.rentalCarSubtitle).text = "${car.model} \u2022 ${car.year}"
-        findViewById<TextView>(R.id.rentalDailyCost).text = "$${car.dailyCost}/day"
+        findViewById<TextView>(R.id.rentalCarSubtitle).text = getString(R.string.car_subtitle, car.model, car.year.toString())
+        findViewById<TextView>(R.id.rentalDailyCost).text = getString(R.string.rental_daily_cost, car.dailyCost.toString())
         findViewById<RatingBar>(R.id.rentalRatingBar).apply {
             rating = car.rating
             (progressDrawable as? android.graphics.drawable.LayerDrawable)
@@ -58,15 +58,15 @@ class RentalDetailsActivity : AppCompatActivity() {
                 ?.setTint(android.graphics.Color.WHITE)
         }
         findViewById<ImageView>(R.id.rentalCarImage).setImageResource(car.imageResId)
-        findViewById<TextView>(R.id.dailyRentalAmount).text = "$${car.dailyCost}.00"
-        findViewById<TextView>(R.id.pickupDateText).text = "Today"
+        findViewById<TextView>(R.id.dailyRentalAmount).text = getString(R.string.rental_daily_amount, car.dailyCost.toString())
+        findViewById<TextView>(R.id.pickupDateText).text = getString(R.string.today)
 
         val slider = findViewById<Slider>(R.id.daySlider)
         slider.addOnChangeListener { _, value, _ ->
             selectedDays = value.toInt()
-            val label = "$selectedDays day${if (selectedDays > 1) "s" else ""}"
+            val label = resources.getQuantityString(R.plurals.selected_days, selectedDays, selectedDays)
             findViewById<TextView>(R.id.selectedDaysText).text = label
-            findViewById<TextView>(R.id.dailyRentalLabel).text = "Daily rental ($label)"
+            findViewById<TextView>(R.id.dailyRentalLabel).text = getString(R.string.daily_rental_label, label)
             updateTotalCost()
         }
 
@@ -76,18 +76,17 @@ class RentalDetailsActivity : AppCompatActivity() {
                 putExtra(MainActivity.EXTRA_RENTAL_DAYS, selectedDays)
             }
             setResult(RESULT_CANCELED, intent)
-            Snackbar.make(findViewById(android.R.id.content), "Booking cancelled.", Snackbar.LENGTH_LONG).show()
             finish()
         }
 
         findViewById<MaterialButton>(R.id.saveBtn).setOnClickListener {
             val totalCost = car.dailyCost * selectedDays
             if (totalCost > 400) {
-                showError("Booking cannot exceed 400 credits")
+                showError(getString(R.string.booking_exceeds_credit))
                 return@setOnClickListener
             }
             if (totalCost > CarRepository.creditBalance) {
-                showError("Insufficient credits. You have ${CarRepository.creditBalance} credits.")
+                showError(getString(R.string.insufficient_credits, CarRepository.creditBalance.toString()))
                 return@setOnClickListener
             }
             val intent = Intent().apply {
@@ -95,14 +94,14 @@ class RentalDetailsActivity : AppCompatActivity() {
                 putExtra(MainActivity.EXTRA_RENTAL_DAYS, selectedDays)
             }
             setResult(RESULT_OK, intent)
-            Snackbar.make(findViewById(android.R.id.content), "Booking confirmed!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.booking_confirmed), Snackbar.LENGTH_LONG).show()
             finish()
         }
 
         findViewById<TextView>(R.id.termsLink).apply {
             paint.flags = paint.flags or Paint.UNDERLINE_TEXT_FLAG
             setOnClickListener {
-                Snackbar.make(findViewById(android.R.id.content), "Terms & Conditions available on our website.", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(findViewById(android.R.id.content), getString(R.string.terms_message), Snackbar.LENGTH_LONG).show()
             }
         }
 
@@ -132,7 +131,7 @@ class RentalDetailsActivity : AppCompatActivity() {
 
     private fun updateTotalCost() {
         val totalCost = car.dailyCost * selectedDays
-        val costText = "$$totalCost"
+        val costText = getString(R.string.total_cost, totalCost.toString())
         findViewById<TextView>(R.id.totalCostText).text = costText
         findViewById<TextView>(R.id.btnTotalPrice).text = costText
         findViewById<TextView>(R.id.errorText).visibility = android.view.View.GONE
