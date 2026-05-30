@@ -151,7 +151,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.carSubtitle).text = "${car.model} \u2022 ${car.year}"
         findViewById<TextView>(R.id.carPrice).text = "$${car.dailyCost} / day"
         findViewById<TextView>(R.id.kilometresText).text = "${car.kilometres} km"
-        findViewById<RatingBar>(R.id.ratingBar).rating = car.rating
+        findViewById<RatingBar>(R.id.ratingBar).apply {
+            rating = car.rating
+            (progressDrawable as? android.graphics.drawable.LayerDrawable)
+                ?.findDrawableByLayerId(android.R.id.background)
+                ?.setTint(android.graphics.Color.WHITE)
+        }
         findViewById<TextView>(R.id.typeText).text = car.model.substringBefore(" ").uppercase()
         findViewById<ImageView>(R.id.carImage).setImageResource(car.imageResId)
         findViewById<MaterialButton>(R.id.rentBtn).isEnabled = true

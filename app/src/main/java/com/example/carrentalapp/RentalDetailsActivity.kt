@@ -51,7 +51,12 @@ class RentalDetailsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.rentalCarName).text = car.name
         findViewById<TextView>(R.id.rentalCarSubtitle).text = "${car.model} \u2022 ${car.year}"
         findViewById<TextView>(R.id.rentalDailyCost).text = "$${car.dailyCost}/day"
-        findViewById<RatingBar>(R.id.rentalRatingBar).rating = car.rating
+        findViewById<RatingBar>(R.id.rentalRatingBar).apply {
+            rating = car.rating
+            (progressDrawable as? android.graphics.drawable.LayerDrawable)
+                ?.findDrawableByLayerId(android.R.id.background)
+                ?.setTint(android.graphics.Color.WHITE)
+        }
         findViewById<ImageView>(R.id.rentalCarImage).setImageResource(car.imageResId)
         findViewById<TextView>(R.id.dailyRentalAmount).text = "$${car.dailyCost}.00"
         findViewById<TextView>(R.id.pickupDateText).text = "Today"
