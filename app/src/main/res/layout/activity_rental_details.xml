@@ -55,21 +55,25 @@
                     android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface" />
 
-                <!-- Dark Mode Toggle -->
-                <ImageView
-                    android:id="@+id/darkModeIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_dark_mode"
-                    android:tint="?attr/colorOnSurfaceVariant"
-                    android:importantForAccessibility="no" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/darkModeToggle"
+                <!-- Credit Balance -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/balanceCard"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:contentDescription="Toggle dark mode" />
+                    android:layout_height="32dp"
+                    app:cardBackgroundColor="?attr/colorPrimary"
+                    app:cardCornerRadius="16dp">
+
+                    <TextView
+                        android:id="@+id/balanceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingHorizontal="12dp"
+                        android:text="500 Credits"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        android:textColor="?attr/colorOnPrimary" />
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
@@ -622,7 +626,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:gravity="center_vertical|start"
                 android:paddingStart="20dp"
-                app:backgroundTint="?attr/colorPrimaryContainer"
+                app:backgroundTint="?attr/colorPrimary"
                 app:cornerRadius="14dp"
                 app:icon="@drawable/ic_lock"
                 app:iconTint="?attr/colorOnPrimary"

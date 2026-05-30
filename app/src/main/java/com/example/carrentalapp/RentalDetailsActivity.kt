@@ -1,7 +1,6 @@
 package com.example.carrentalapp
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Paint
 import android.os.Bundle
 import android.widget.ImageButton
@@ -10,13 +9,11 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.example.carrentalapp.data.CarRepository
 import com.example.carrentalapp.model.Car
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.switchmaterial.SwitchMaterial
 
 class RentalDetailsActivity : AppCompatActivity() {
 
@@ -24,8 +21,6 @@ class RentalDetailsActivity : AppCompatActivity() {
     private var selectedDays = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val prefs = getSharedPreferences("theme", MODE_PRIVATE)
-        AppCompatDelegate.setDefaultNightMode(prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rental_details)
 
@@ -36,15 +31,6 @@ class RentalDetailsActivity : AppCompatActivity() {
         }
 
         setupViews()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        val prefs = getSharedPreferences("theme", MODE_PRIVATE)
-        val savedMode = prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        if (savedMode != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            delegate.setLocalNightMode(savedMode)
-        }
     }
 
     private fun setupViews() {
@@ -105,28 +91,12 @@ class RentalDetailsActivity : AppCompatActivity() {
             }
         }
 
-        updateDarkModeIcon()
-
+        updateBalance()
         updateTotalCost()
     }
 
-    private fun isNightMode(): Boolean {
-        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return mode == Configuration.UI_MODE_NIGHT_YES
-    }
-
-    private fun updateDarkModeIcon() {
-        val toggle = findViewById<SwitchMaterial>(R.id.darkModeToggle)
-        toggle.setOnCheckedChangeListener(null)
-        toggle.isChecked = isNightMode()
-        toggle.setOnCheckedChangeListener { _, isChecked ->
-            val mode = if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            getSharedPreferences("theme", MODE_PRIVATE).edit().putInt("night_mode", mode).apply()
-            AppCompatDelegate.setDefaultNightMode(mode)
-        }
-        findViewById<ImageView>(R.id.darkModeIcon).setImageResource(
-            if (isNightMode()) R.drawable.ic_dark_mode else R.drawable.ic_light_mode
-        )
+    private fun updateBalance() {
+        findViewById<TextView>(R.id.balanceText).text = getString(R.string.balance_credits, CarRepository.creditBalance.toString())
     }
 
     private fun updateTotalCost() {

@@ -72,8 +72,8 @@ class RentalDetailsActivityTest {
     }
 
     @Test
-    fun launches_showsDarkModeToggle() {
-        onView(withId(R.id.darkModeToggle)).check(matches(isDisplayed()))
+    fun launches_showsCreditBalance() {
+        onView(withId(R.id.balanceText)).check(matches(isDisplayed()))
     }
 
     @Test
