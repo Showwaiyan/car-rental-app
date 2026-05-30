@@ -194,8 +194,8 @@
                             app:cardCornerRadius="100dp"
                             app:cardBackgroundColor="?attr/colorPrimaryContainer"
                             app:cardElevation="0dp"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="2dp">
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="6dp">
 
                             <RatingBar
                                 android:id="@+id/rentalRatingBar"
@@ -205,7 +205,8 @@
                                 android:isIndicator="true"
                                 android:numStars="5"
                                 android:stepSize="0.1"
-                                android:rating="4.8" />
+                                android:rating="4.8"
+                                android:progressTint="@color/star_yellow" />
 
                         </com.google.android.material.card.MaterialCardView>
 
