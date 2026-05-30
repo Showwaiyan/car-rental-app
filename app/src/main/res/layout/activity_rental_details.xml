@@ -193,20 +193,21 @@
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="100dp"
                             app:cardBackgroundColor="?attr/colorPrimaryContainer"
-                            app:cardElevation="0dp">
+                            app:cardElevation="0dp"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="6dp">
 
                             <RatingBar
                                 android:id="@+id/rentalRatingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:isIndicator="true"
                                 android:numStars="5"
+                                android:max="5"
                                 android:stepSize="0.1"
                                 android:rating="4.8"
-                                android:progressTint="@color/star_yellow"
-                                android:padding="8dp"
-                                android:scaleX="0.55"
-                                android:scaleY="0.55" />
+                                android:progressTint="@color/star_yellow" />
 
                         </com.google.android.material.card.MaterialCardView>
 
