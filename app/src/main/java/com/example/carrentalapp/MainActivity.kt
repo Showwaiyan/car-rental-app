@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.carrentalapp.data.CarRepository
 import com.example.carrentalapp.model.Car
 import com.example.carrentalapp.ui.FavouriteAdapter
+import com.example.carrentalapp.ui.RentedCarAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private var currentCarIndex = 0
     private var displayedCars: List<Car> = CarRepository.availableCars
     private lateinit var favouriteAdapter: FavouriteAdapter
+    private lateinit var rentedCarAdapter: RentedCarAdapter
 
 
     private val rentResultLauncher = registerForActivityResult(
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                 updateCurrentCar()
                 updateFavourites()
                 updateBalance()
+                updateRentals()
             }
         } else if (carId > 0 && !confirmed) {
             Snackbar.make(findViewById(android.R.id.content), "Booking cancelled.", Snackbar.LENGTH_LONG).show()
@@ -125,6 +128,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         recycler.adapter = favouriteAdapter
+
+        findViewById<RecyclerView>(R.id.rentalsRecycler).apply {
+            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            rentedCarAdapter = RentedCarAdapter(CarRepository.rentedCars)
+            adapter = rentedCarAdapter
+        }
+        updateRentals()
     }
 
     private fun showNextCar() {
@@ -193,6 +203,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateBalance() {
         findViewById<TextView>(R.id.balanceText).text = "${CarRepository.creditBalance} Credits"
+    }
+
+    private fun updateRentals() {
+        rentedCarAdapter.update(CarRepository.rentedCars)
     }
 
     private fun isNightMode(): Boolean {

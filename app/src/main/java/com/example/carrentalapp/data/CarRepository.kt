@@ -2,6 +2,7 @@ package com.example.carrentalapp.data
 
 import com.example.carrentalapp.R
 import com.example.carrentalapp.model.Car
+import com.example.carrentalapp.model.Rental
 
 object CarRepository {
     private val _availableCars = mutableListOf(
@@ -17,6 +18,9 @@ object CarRepository {
     private val _favouriteIds = mutableSetOf<Int>()
     val favouriteCars: List<Car> get() = _availableCars.filter { it.id in _favouriteIds }
 
+    private val _rentals = mutableListOf<Rental>()
+    val rentedCars: List<Rental> get() = _rentals.toList()
+
     var creditBalance = 500
         private set
 
@@ -27,6 +31,7 @@ object CarRepository {
         creditBalance -= totalCost
         _availableCars.removeAll { it.id == carId }
         _favouriteIds.remove(carId)
+        _rentals.add(Rental(car, days))
         return true
     }
 
@@ -48,6 +53,7 @@ object CarRepository {
             )
         )
         _favouriteIds.clear()
+        _rentals.clear()
         creditBalance = 500
     }
 }

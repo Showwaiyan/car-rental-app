@@ -529,6 +529,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
 
+            <!-- MY RENTALS -->
+            <TextView
+                android:id="@+id/rentalsLabel"
+                style="@style/Widget.CarRentalApp.SpecLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="MY RENTALS"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:letterSpacing="0.1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rentalsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_rented" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
