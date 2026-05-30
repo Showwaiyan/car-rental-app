@@ -261,9 +261,7 @@
                             android:layout_margin="12dp"
                             app:cardCornerRadius="100dp"
                             app:cardBackgroundColor="#E8FFFFFF"
-                            app:cardElevation="2dp"
-                            android:paddingHorizontal="14dp"
-                            android:paddingVertical="6dp">
+                            app:cardElevation="2dp">
 
                             <RatingBar
                                 android:id="@+id/ratingBar"
@@ -274,7 +272,8 @@
                                 android:numStars="5"
                                 android:stepSize="0.1"
                                 android:rating="4.8"
-                                android:progressTint="@color/star_yellow" />
+                                android:progressTint="@color/star_yellow"
+                                android:padding="8dp" />
 
                         </com.google.android.material.card.MaterialCardView>
 
