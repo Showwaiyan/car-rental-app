@@ -43,11 +43,7 @@ class RentalDetailsActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("theme", MODE_PRIVATE)
         val savedMode = prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         if (savedMode != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            val isDark = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-            val shouldBeDark = savedMode == AppCompatDelegate.MODE_NIGHT_YES
-            if (isDark != shouldBeDark) {
-                delegate.setLocalNightMode(savedMode)
-            }
+            delegate.setLocalNightMode(savedMode)
         }
     }
 
