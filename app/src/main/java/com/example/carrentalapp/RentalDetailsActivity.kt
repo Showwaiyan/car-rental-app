@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,7 @@ class RentalDetailsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.rentalCarName).text = car.name
         findViewById<TextView>(R.id.rentalCarSubtitle).text = "${car.model} \u2022 ${car.year}"
         findViewById<TextView>(R.id.rentalDailyCost).text = "$${car.dailyCost}/day"
-        findViewById<TextView>(R.id.rentalRatingText).text = car.rating.toString()
+        findViewById<RatingBar>(R.id.rentalRatingBar).rating = car.rating
         findViewById<ImageView>(R.id.rentalCarImage).setImageResource(car.imageResId)
         findViewById<TextView>(R.id.dailyRentalAmount).text = "$${car.dailyCost}.00"
         findViewById<TextView>(R.id.pickupDateText).text = "Today"

@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -139,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.carSubtitle).text = "${car.model} \u2022 ${car.year}"
         findViewById<TextView>(R.id.carPrice).text = "$${car.dailyCost} / day"
         findViewById<TextView>(R.id.kilometresText).text = "${car.kilometres} km"
-        findViewById<TextView>(R.id.ratingText).text = car.rating.toString()
+        findViewById<RatingBar>(R.id.ratingBar).rating = car.rating
         findViewById<TextView>(R.id.typeText).text = car.model.substringBefore(" ").uppercase()
         findViewById<ImageView>(R.id.carImage).setImageResource(car.imageResId)
         findViewById<MaterialButton>(R.id.rentBtn).isEnabled = true

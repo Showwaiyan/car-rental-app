@@ -193,34 +193,19 @@
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="100dp"
                             app:cardBackgroundColor="?attr/colorPrimaryContainer"
-                            app:cardElevation="0dp">
+                            app:cardElevation="0dp"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp">
 
-                            <LinearLayout
+                            <RatingBar
+                                android:id="@+id/rentalRatingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="★"
-                                    android:textSize="13sp"
-                                    android:textColor="?attr/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/rentalRatingText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="3dp"
-                                    android:text="4.8"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold"
-                                    android:textColor="?attr/colorPrimary" />
-
-                            </LinearLayout>
+                                android:isIndicator="true"
+                                android:numStars="5"
+                                android:stepSize="0.1"
+                                android:rating="4.8" />
 
                         </com.google.android.material.card.MaterialCardView>
 

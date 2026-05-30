@@ -261,34 +261,19 @@
                             android:layout_margin="12dp"
                             app:cardCornerRadius="100dp"
                             app:cardBackgroundColor="#E8FFFFFF"
-                            app:cardElevation="2dp">
+                            app:cardElevation="2dp"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp">
 
-                            <LinearLayout
+                            <RatingBar
+                                android:id="@+id/ratingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="4dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="\u2605"
-                                    android:textColor="@color/star_yellow"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/ratingText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="3dp"
-                                    android:text="4.8"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#191c1e" />
-
-                            </LinearLayout>
+                                android:isIndicator="true"
+                                android:numStars="5"
+                                android:stepSize="0.1"
+                                android:rating="4.8" />
 
                         </com.google.android.material.card.MaterialCardView>
 
