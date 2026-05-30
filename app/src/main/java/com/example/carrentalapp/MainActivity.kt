@@ -70,6 +70,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialButton>(R.id.nextBtn).setOnClickListener { showNextCar() }
         findViewById<MaterialButton>(R.id.rentBtn).setOnClickListener { openRentalScreen() }
         findViewById<ImageButton>(R.id.favBtn).setOnClickListener { toggleFavourite() }
+        findViewById<ImageView>(R.id.carImage).setOnLongClickListener {
+            toggleFavourite()
+            val msg = if (CarRepository.isFavourite(displayedCars[currentCarIndex].id))
+                "Added to favourites" else "Removed from favourites"
+            Snackbar.make(it, msg, Snackbar.LENGTH_SHORT).show()
+            true
+        }
         findViewById<SwitchMaterial>(R.id.darkModeToggle).setOnCheckedChangeListener { _, isChecked ->
             delegate.setLocalNightMode(
                 if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
