@@ -111,38 +111,26 @@
                 app:strokeColor="?attr/colorOutlineVariant"
                 app:strokeWidth="1dp">
 
-                <LinearLayout
+                <SearchView
+                    android:id="@+id/searchInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="16dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_search"
-                        android:tint="?attr/colorPrimary"
-                        android:contentDescription="Search" />
-
-                    <EditText
-                        android:id="@+id/searchInput"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@null"
-                        android:hint="Search for a car..."
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textColorHint="?attr/colorOnSurfaceVariant"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:imeOptions="actionSearch" />
-
-                </LinearLayout>
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Search for a car..."
+                    android:background="@null" />
 
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- SEARCH RESULTS -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResultsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:visibility="visible"
+                tools:listitem="@layout/item_search_result" />
 
             <!-- SORT BUTTONS -->
             <LinearLayout
@@ -260,7 +248,7 @@
                             android:layout_gravity="top|end"
                             android:layout_margin="12dp"
                             app:cardCornerRadius="100dp"
-                            app:cardBackgroundColor="#E8FFFFFF"
+                            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
                             app:cardElevation="2dp"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="6dp">

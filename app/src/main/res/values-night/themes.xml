@@ -1,7 +1,7 @@
 <resources>
     <style name="Base.Theme.CarRentalApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimary">#4caf50</item>
+        <item name="colorOnPrimary">#002106</item>
         <item name="colorPrimaryContainer">#003a15</item>
         <item name="colorOnPrimaryContainer">#71fe91</item>
 

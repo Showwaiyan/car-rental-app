@@ -3,9 +3,7 @@ package com.example.carrentalapp
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
+import android.widget.SearchView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -22,6 +20,7 @@ import com.example.carrentalapp.data.CarRepository
 import com.example.carrentalapp.model.Car
 import com.example.carrentalapp.ui.FavouriteAdapter
 import com.example.carrentalapp.ui.RentedCarAdapter
+import com.example.carrentalapp.ui.SearchResultAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -32,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     private var displayedCars: List<Car> = CarRepository.availableCars
     private lateinit var favouriteAdapter: FavouriteAdapter
     private lateinit var rentedCarAdapter: RentedCarAdapter
+    private lateinit var searchResultAdapter: SearchResultAdapter
+    private var isSearchActive = false
 
 
     private val rentResultLauncher = registerForActivityResult(
@@ -109,14 +110,30 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        val searchInput = findViewById<EditText>(R.id.searchInput)
-        searchInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                searchCars(s.toString())
+        findViewById<SearchView>(R.id.searchInput).setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchCars(query ?: "")
+                return true
             }
-            override fun afterTextChanged(s: Editable?) {}
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchCars(newText ?: "")
+                return true
+            }
         })
+
+        val searchResultsList = findViewById<RecyclerView>(R.id.searchResultsList)
+        searchResultsList.layoutManager = LinearLayoutManager(this@MainActivity)
+        searchResultAdapter = SearchResultAdapter(emptyList()) { car ->
+            val idx = displayedCars.indexOfFirst { it.id == car.id }
+            if (idx >= 0) {
+                currentCarIndex = idx
+                updateDisplayedCar()
+            }
+            findViewById<SearchView>(R.id.searchInput).setQuery("", false)
+            searchResultsList.visibility = android.view.View.GONE
+            isSearchActive = false
+        }
+        searchResultsList.adapter = searchResultAdapter
 
         val recycler = findViewById<RecyclerView>(R.id.favouritesRecycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -247,23 +264,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchCars(query: String) {
-        val source = if (query.isBlank()) CarRepository.availableCars
-        else CarRepository.availableCars.filter {
+        if (query.isBlank()) {
+            findViewById<RecyclerView>(R.id.searchResultsList).visibility = android.view.View.GONE
+            isSearchActive = false
+            return
+        }
+        val matches = CarRepository.availableCars.filter {
             it.name.contains(query, ignoreCase = true) ||
                 it.model.contains(query, ignoreCase = true)
         }
-        displayedCars = source.toMutableList()
-        val checkedId = findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(R.id.sortToggleGroup).checkedButtonId
-        when (checkedId) {
-            R.id.sortRatingBtn -> displayedCars = displayedCars.sortedByDescending { it.rating }
-            R.id.sortYearBtn -> displayedCars = displayedCars.sortedByDescending { it.year }
-            R.id.sortCostBtn -> displayedCars = displayedCars.sortedBy { it.dailyCost }
-        }
-        currentCarIndex = 0
-        if (displayedCars.isNotEmpty()) updateDisplayedCar()
-        else {
-            findViewById<TextView>(R.id.carName).text = "No cars found"
-        }
+        findViewById<RecyclerView>(R.id.searchResultsList).visibility =
+            if (matches.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+        searchResultAdapter.update(matches)
+        isSearchActive = true
     }
 
     companion object {
