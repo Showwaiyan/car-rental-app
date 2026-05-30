@@ -169,6 +169,7 @@
 
                             <TextView
                                 android:id="@+id/rentalCarName"
+                                style="@style/Widget.CarRentalApp.CarTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Car Name"
@@ -178,6 +179,7 @@
 
                             <TextView
                                 android:id="@+id/rentalCarSubtitle"
+                                style="@style/Widget.CarRentalApp.CarSubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
@@ -342,6 +344,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                style="@style/Widget.CarRentalApp.SpecLabel"
                                 android:text="PICKUP &amp; RETURN"
                                 android:textSize="9sp"
                                 android:textStyle="bold"

@@ -321,6 +321,7 @@
 
                             <TextView
                                 android:id="@+id/carName"
+                                style="@style/Widget.CarRentalApp.CarTitle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -359,6 +360,7 @@
                         <!-- Subtitle -->
                         <TextView
                             android:id="@+id/carSubtitle"
+                            style="@style/Widget.CarRentalApp.CarSubtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -500,6 +502,7 @@
             <!-- FAVOURITES -->
             <TextView
                 android:id="@+id/favouritesLabel"
+                style="@style/Widget.CarRentalApp.SpecLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
