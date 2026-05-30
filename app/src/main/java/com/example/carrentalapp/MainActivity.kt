@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val prefs = getSharedPreferences("theme", MODE_PRIVATE)
-        delegate.setLocalNightMode(prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
+        AppCompatDelegate.setDefaultNightMode(prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<SwitchMaterial>(R.id.darkModeToggle).setOnCheckedChangeListener { _, isChecked ->
             val mode = if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
             getSharedPreferences("theme", MODE_PRIVATE).edit().putInt("night_mode", mode).apply()
-            delegate.setLocalNightMode(mode)
+            AppCompatDelegate.setDefaultNightMode(mode)
         }
         updateDarkModeIcon()
 

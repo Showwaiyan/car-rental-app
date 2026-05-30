@@ -25,7 +25,7 @@ class RentalDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val prefs = getSharedPreferences("theme", MODE_PRIVATE)
-        delegate.setLocalNightMode(prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
+        AppCompatDelegate.setDefaultNightMode(prefs.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rental_details)
 
@@ -109,7 +109,7 @@ class RentalDetailsActivity : AppCompatActivity() {
         toggle.setOnCheckedChangeListener { _, isChecked ->
             val mode = if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
             getSharedPreferences("theme", MODE_PRIVATE).edit().putInt("night_mode", mode).apply()
-            delegate.setLocalNightMode(mode)
+            AppCompatDelegate.setDefaultNightMode(mode)
         }
         findViewById<ImageView>(R.id.darkModeIcon).setImageResource(
             if (isNightMode()) R.drawable.ic_dark_mode else R.drawable.ic_light_mode
