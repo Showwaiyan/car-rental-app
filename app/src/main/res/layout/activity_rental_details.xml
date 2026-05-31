@@ -266,7 +266,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="100dp"
-                            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                            app:cardBackgroundColor="?attr/colorPrimary"
                             app:cardElevation="0dp">
 
                             <TextView
@@ -294,11 +294,11 @@
                         android:valueTo="7"
                         android:value="1"
                         android:stepSize="1"
-                        app:thumbColor="?attr/colorPrimaryContainer"
+                        app:thumbColor="?attr/colorPrimary"
                         app:thumbRadius="10dp"
-                        app:trackColorActive="?attr/colorPrimaryContainer"
+                        app:trackColorActive="?attr/colorPrimary"
                         app:trackColorInactive="?attr/colorSurfaceContainerHighest"
-                        app:haloColor="?attr/colorPrimaryContainer"
+                        app:haloColor="?attr/colorPrimary"
                         app:trackHeight="6dp" />
 
                     <!-- Slider end labels -->
